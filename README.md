@@ -5,6 +5,21 @@ likely to cancel. It generates example data, validates and preprocesses a CSV,
 trains and evaluates a logistic-regression model, saves the fitted model, and
 scores future customer rows.
 
+## Browser demo
+
+Launch a local dashboard that runs the synthetic generate/train/evaluate/score
+flow and displays holdout metrics plus example scores:
+
+```powershell
+python dashboard.py
+```
+
+Open `http://127.0.0.1:8000` in a browser and click **Run synthetic demo**.
+The dashboard binds to localhost only, uses temporary files, and deletes them
+when each run finishes. It does not upload or read the provided customer CSVs.
+Its synthetic predictions are for demonstration only and must not be used for
+customer decisions. Press `Ctrl+C` in the terminal to stop it.
+
 ## Quick start
 
 Python 3.10+ is recommended.

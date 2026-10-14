@@ -5,11 +5,20 @@ from pathlib import Path
 import pandas as pd
 
 from churn_pipeline import generate_demo, normalize_target, score, train
+from dashboard import run_demo
 from prepare_order_inactivity import build_dataset
 from prepare_subscription_churn import build_dataset as build_subscription_churn_dataset
 
 
 class ChurnPipelineTests(unittest.TestCase):
+    def test_dashboard_demo_returns_metrics_and_synthetic_scores(self) -> None:
+        result = run_demo()
+        self.assertIn("roc_auc", result["metrics"])
+        self.assertEqual(len(result["sample"]), 12)
+        self.assertTrue(
+            all(0 <= row["churn_probability"] <= 1 for row in result["sample"])
+        )
+
     def test_subscription_builder_uses_point_in_time_status_and_30_day_label(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
